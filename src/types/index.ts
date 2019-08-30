@@ -24,5 +24,13 @@ export interface ApolloPersistOptions<TSerialized> {
   key?: string;
   serialize?: boolean;
   maxSize?: number | false;
+  /**
+   * Use a function to filter the cache object to essentials before persisting.
+   * This allows only the data we needed to be persisted and the rest can still
+   * be in the immemory cache. The user is supposed to understand the
+   * structure/implementation of the cache object and manipulate it themselves
+   */
+  filterCacheForPersistance?: (cacheObject: TSerialized) => TSerialized;
+
   debug?: boolean;
 }

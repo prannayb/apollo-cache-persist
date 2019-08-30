@@ -1,5 +1,7 @@
 # apollo-cache-persist [![npm version](https://badge.fury.io/js/apollo-cache-persist.svg)](https://badge.fury.io/js/apollo-cache-persist) [![build status](https://travis-ci.org/apollographql/apollo-cache-persist.svg?branch=master)](https://travis-ci.org/apollographql/apollo-cache-persist)
 
+_(prannayb fork): Added filterCacheForPersistance option to process the cache object before persisting. User is supposed to understan dthe cache object's structure and implementation to execute this filter._
+
 Simple persistence for all Apollo Client 2.0 cache implementations, including
 [`InMemoryCache`][0] and [`Hermes`][1].
 
@@ -113,13 +115,18 @@ persistCache({
   // If exceeded, persistence will pause and app will start up cold on next launch.
   maxSize?: number | false,
 
+  // Use a function to filter the cache object to essentials before persisting.
+  // This allows only the data we needed to be persisted and the rest can still
+  // be in the immemory cache. The user is supposed to understand the
+  // structure/implementation of the cache object and manipulate it themselves
+  filterCacheForPersistance?: (cacheObject: TSerialized) => TSerialized
+
   /**
    * Debugging options.
    */
 
   // Enable console logging.
   debug?: boolean,
-
 }): Promise<void>;
 ```
 
